@@ -1,0 +1,5 @@
+curl -u "<name>":"eb7zd2a3hqm576girstvzt5tg3ytlqqbye6j6mopjdrfyfucaopq" --request get "https://<path>/_build/_apis/userentitlements?api-version=6.0-preview.3"
+curl -u $username:$token "https://dev.azure.com/celumrocks/ContentHub/_apis/build/builds?definitions=153" > json-invalid.json
+		idnumber=$(cat json-invalid.json | tr -d " \t\n\r" | sed "s/],}/]}/g" | sed 's/\"\\\"/\"\"/' | jq '.value[0].id')
+		downloadlink=$(curl -u $username:$token "https://<path>/_apis/build/builds/$idnumber/artifacts?artifactName=<name>&api-version=6.0" | jq '.resource.downloadUrl'| sed 's/\"//g')
+curl -u $username:$token $downloadlink --output artifact.zip
